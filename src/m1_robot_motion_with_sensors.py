@@ -4,8 +4,8 @@ wait-until-event pattern, in the context of robot motion that uses sensors.
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Zhen Yang.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -51,7 +51,13 @@ def wait_for_seconds():
     #   NOTE: this function has nothing to do with robots,
     #   but its concepts will be useful in the forthcoming robot exercises.
     # -------------------------------------------------------------------------
-
+    print('Hello')
+    start = time.time()
+    while True:
+        current = time.time()
+        if current - start > 3:
+            break
+    print('Goodbye')
 
 def run_test_init():
     """ Tests the   __init__   method of the SimpleRoseBot class. """
@@ -63,6 +69,7 @@ def run_test_init():
     # TODO: 3. Implement this function, then implement the   __init__   method
     #   of the SimpleRoseBot class, then use this function to test __init__.
     # -------------------------------------------------------------------------
+    SimpleRoseBot()
 
 
 def run_test_go_and_stop():
@@ -76,6 +83,14 @@ def run_test_go_and_stop():
     #   methods of the SimpleRoseBot class, then use this function
     #   to test both   go   and   stop   at the same time.
     # -------------------------------------------------------------------------
+    robot = SimpleRoseBot()
+    robot.go(70, 70)
+    start = time.time()
+    while True:
+        current = time.time()
+        if current - start>= 2:
+            break
+    robot.stop()
 
 
 def run_test_go_straight_for_seconds():
@@ -121,6 +136,22 @@ def run_test_go_straight_until_black():
 # Put your   SimpleRoseBot    class here (below this comment).
 # Your instructor may help you get started.
 ###############################################################################
+class SimpleRoseBot(object):
+
+    def __init__(self):
+        self.left_wheel_motor = Motor('B')
+        self.right_wheel_motor = Motor('C')
+        self.color_sensor_motor = ColorSensor(3)
+
+    def go(self, left_wheel_speed, right_wheel_speed):
+        self.left_wheel_motor.turn_on(left_wheel_speed)
+        self.right_wheel_motor.turn_on(right_wheel_speed)
+
+    def stop(self):
+        self.right_wheel_motor.turn_off()
+        self.left_wheel_motor.turn_off()
+
+
 
 
 ###############################################################################
